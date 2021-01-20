@@ -1,14 +1,19 @@
-import './App.css';
 import React from 'react';
+import { Switch, Route, BrowserRouter} from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
+import Home from './components/Shared/Home';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-      <p>Interview App</p>
-      </header>
-    </div>
-  );
-}
+
+const App = () => (
+  <>
+    <Container>
+      <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+      </Switch>
+      </BrowserRouter>
+    </Container>
+  </>
+)
 
 export default App;
