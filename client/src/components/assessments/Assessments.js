@@ -1,22 +1,65 @@
-// import React from 'react';
-// import { Button, Icon } from 'semantic-ui-react';
+import React, {Component} from 'react';
+import { Form } from 'semantic-ui-react';
 
-// const Assessments = ({ id, updateAssessment, deleteAssessment }) => (
-//   <div style={styles.flex}>
-//    <div style={styles.flex}>
-//      <Button
-//        onClick={() => updateAssessment(id)}
-//      />
-//    </div>
-//    <Button
-     
-//      onClick={() => deleteAssessment(id)}
-//      style={{ marginLeft: "15px", }}
-//    >
-//      <Icon name="trash" />
-//    </Button>
-//  </div>
+
+
+// const Assessments =() => (
+//   <h1>Assessments </h1>
+  
 // )
 
+class Assessments extends Component {
+  state = {name: '', assessment_type: ''}
 
-// export default Assessments;
+  componentDidMount() {
+    if (this.props.id) {
+      const { name, assessment_type } = this.props
+      this.setState({ name, assessment_type })
+    }
+  }
+
+  handleChange = (a) => {
+    const { name, value } = a.target
+    this.setState({ [name]: value })
+  }
+
+  handleSubmit = (a) => {
+    a.preventDefault()
+    if (this.props.id) {
+      const { id, history } = this.props
+      this.props.updateName(id, this.state, history)
+      this.props.toggleUpdate()
+    }
+    this.props.close()
+    this.setState({ name: '', assessment_type: ''})
+    }
+
+    close = () => this.setState({ open: false })
+
+    render() {
+      const { name, assessment_type } = this.state
+      return(
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Input
+          name='AssessmentName'
+          value={name}
+          onChange={this.handleChange}
+          label='Assessment Name'
+          required
+          />
+          <Form.Input
+          name='AssessmentType'
+          value={assessment_type}
+          onChange={this.handleChange}
+          label='Assessment Type'
+          required
+          />
+
+          
+          <Form.Button>Submit</Form.Button>
+        </Form>
+      )
+    }
+  }
+
+export default Assessments;
